@@ -41,37 +41,70 @@ export class SpotifyService {
     //Make sure you're encoding the resource with encodeURIComponent().
     //Depending on the category (artist, track, album), return an array of that type of data.
     //JavaScript's "map" function might be useful for this, but there are other ways of building the array.
-    return null as any;
+    var endpoint = '/search/' + category + "/" + encodeURIComponent(resource);
+    return this.sendRequestToExpress(endpoint).then((result) => {
+      if (category == 'artist'){
+        return result['artists']['items'].map((item:any) => new ArtistData(item));
+      }
+      else if (category == 'album'){
+        return result['albums']['items'].map((item:any) => new AlbumData(item));
+      }
+      else if (category == 'tracks'){
+        return result['tracks']['items'].map((item:any) => new TrackData(item));
+      }
+    })
   }
 
   getArtist(artistId:string):Promise<ArtistData> {
     //TODO: use the artist endpoint to make a request to express.
     //Again, you may need to encode the artistId.
-    return null as any;
+    var endpoint = '/artist/' + encodeURIComponent(artistId);
+    return this.sendRequestToExpress(endpoint).then((result)=> {
+      return new ArtistData(result);
+    });
   }
 
   getTopTracksForArtist(artistId:string):Promise<TrackData[]> {
     //TODO: use the top tracks endpoint to make a request to express.
-    return null as any;
+    var endpoint = '/artist-top-tracks/' + encodeURIComponent(artistId);
+    return this.sendRequestToExpress(endpoint).then((result) => {
+      return result['tracks'].map((item:any) => new TrackData(item));
+    })
   }
 
   getAlbumsForArtist(artistId:string):Promise<AlbumData[]> {
     //TODO: use the albums for an artist endpoint to make a request to express.
-    return null as any;
+    var endpoint = '/artist-albums/' + encodeURIComponent(artistId)
+    return this.sendRequestToExpress(endpoint).then((result) => {
+      return result['items'].map((item:any) => new AlbumData(item));
+    })
   }
 
   getAlbum(albumId:string):Promise<AlbumData> {
     //TODO: use the album endpoint to make a request to express.
-    return null as any;
+    var endpoint = '/album/' + encodeURIComponent(albumId);
+
+    return this.sendRequestToExpress(endpoint).then((result)=> {
+      return new AlbumData(result);
+    });
+
   }
 
   getTracksForAlbum(albumId:string):Promise<TrackData[]> {
     //TODO: use the tracks for album endpoint to make a request to express.
-    return null as any;
+    var endpoint = '/album/' + encodeURIComponent(albumId);
+
+    return this.sendRequestToExpress(endpoint).then((result)=>{
+      return result['items'].map((item:any) => new TrackData(item));
+    })
   }
 
   getTrack(trackId:string):Promise<TrackData> {
     //TODO: use the track endpoint to make a request to express.
-    return null as any;
+    var endpoint = '/album/' + encodeURIComponent(trackId);
+
+    return this.sendRequestToExpress(endpoint).then((result)=> {
+      return new TrackData(result);
+    });
   }
 }
