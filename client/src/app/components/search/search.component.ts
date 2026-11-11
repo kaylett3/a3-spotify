@@ -6,26 +6,38 @@ import { TrackData } from '../../data/track-data';
 import { ResourceData } from '../../data/resource-data';
 
 @Component({
-    selector: 'app-search',
-    templateUrl: './search.component.html',
-    styleUrls: ['./search.component.css'],
-    providers: [SpotifyService],
-    standalone: false
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css'],
+  providers: [SpotifyService],
+  standalone: false
 })
 export class SearchComponent implements OnInit {
-  searchString:string = '';
-  searchCategory:string = 'artist';
-  searchCategories:string[] = ['artist', 'album', 'track'];
-  resources:ResourceData[] = [];
+  searchString: string = '';
+  searchCategory: string = 'artist';
+  searchCategories: string[] = ['artist', 'album', 'track'];
+  resources: ResourceData[] = [];
+  tracks: TrackData[] = [];
 
-  constructor(private spotifyService:SpotifyService) { }
+  constructor(private spotifyService: SpotifyService) { }
 
   ngOnInit() {
   }
 
   search() {
     //TODO: call search function in spotifyService and parse response
-    this.spotifyService.searchFor(this.searchCategory, this.searchString).then((result) => {this.resources = result;})
-  }
+    if (this.searchString.trim() === '') {
+      return;
+    }
 
+    this.spotifyService.searchFor(this.searchCategory, this.searchString).then((result) => {
+      this.resources = result;
+
+      if (this.searchCategory === 'track') {
+        this.tracks = result as TrackData[];
+      } else {
+        this.tracks = [];
+      }
+    });
+  }
 }

@@ -49,9 +49,10 @@ export class SpotifyService {
       else if (category == 'album'){
         return result['albums']['items'].map((item:any) => new AlbumData(item));
       }
-      else if (category == 'tracks'){
+      else if (category == 'track'){
         return result['tracks']['items'].map((item:any) => new TrackData(item));
       }
+      return [];
     })
   }
 
@@ -92,7 +93,7 @@ export class SpotifyService {
 
   getTracksForAlbum(albumId:string):Promise<TrackData[]> {
     //TODO: use the tracks for album endpoint to make a request to express.
-    var endpoint = '/album/' + encodeURIComponent(albumId);
+    var endpoint = '/album-tracks/' + encodeURIComponent(albumId);
 
     return this.sendRequestToExpress(endpoint).then((result)=>{
       return result['items'].map((item:any) => new TrackData(item));
@@ -101,7 +102,7 @@ export class SpotifyService {
 
   getTrack(trackId:string):Promise<TrackData> {
     //TODO: use the track endpoint to make a request to express.
-    var endpoint = '/album/' + encodeURIComponent(trackId);
+    var endpoint = '/track/' + encodeURIComponent(trackId);
 
     return this.sendRequestToExpress(endpoint).then((result)=> {
       return new TrackData(result);

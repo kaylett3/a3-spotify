@@ -1,6 +1,6 @@
 <h1>Search Spotify</h1>
 <!--TODO: bind input's model to searchString-->
-<input type="text" [(ngModel)="searchString"]>
+<input type="text" [(ngModel)]="searchString">
 <!--TODO: bind select's model to searchCategory-->
 <select [(ngModel)]="searchCategory">
 	<!--TODO: loop over searchCategories to create dropdown options-->
@@ -10,4 +10,14 @@
 <!--TODO: Call search function when the button is clicked-->
 <button (click)="search()" class="btn btn-light">Search</button>
 <!--TODO: Display a carousel component if searching for an artist or album. Bind carousel's resources and give it a static carouselId.-->
+<app-carousel
+	*ngIf="(searchCategory === 'artist' || searchCategory == 'album') && resources.length > 0"
+	[resources]="resources"
+	[carouselId]="'searchResults'">
+</app-carousel>
 <!--TODO: Display a track-list component if searching for a track. Bind track-list's tracks.-->
+<app-track-list
+	*ngIf="searchCategory === 'track' && tracks.length > 0"
+	[tracks]="tracks">
+</app-track-list>
+
