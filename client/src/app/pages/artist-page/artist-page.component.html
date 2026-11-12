@@ -7,7 +7,7 @@
 			<img id="artistImg" [src]="artist.imageURL">
 			<p>
 				<!--TODO: link to artist page on spotify, display artist name-->
-				<a class="btn btn-light" role="button" target="_blank">Open {{artist.name}} on Spotify</a>
+				<a class="btn btn-light" role="button" [href]="artist.url" target="_blank">Open {{artist.name}} on Spotify</a>
 			</p>
 		</div>
 		<div class="col-xl-4 col-12">
@@ -27,7 +27,7 @@
 			<h3>{{artist.name}}'s Top Tracks</h3>
 			<!--TODO: display the artist's top tracks-->
 			@if(topTracks) {
-				<app-track-list [tracks]="topTracks" [hideArtist]="true" [hideAlbum]="true"></app-track-list>
+				<app-track-list [tracks]="topTracks"></app-track-list>
 			}
 		</div>
 	</div>

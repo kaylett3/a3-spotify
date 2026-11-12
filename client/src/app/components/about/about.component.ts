@@ -24,8 +24,8 @@ export class AboutComponent implements OnInit {
   loadView(){
     this.spotifyService.aboutMe().then((data) => {
     this.name = data.name;
-    this.profile_pic = data.imageURL
-    this.profile_link = data.spotifyProfile
+    this.profile_pic = data.imageURL;
+    this.profile_link = data.spotifyProfile;
     });
   }
 }
