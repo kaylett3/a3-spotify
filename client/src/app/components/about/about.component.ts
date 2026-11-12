@@ -27,6 +27,5 @@ export class AboutComponent implements OnInit {
     this.profile_pic = data.imageURL
     this.profile_link = data.spotifyProfile
     });
-
   }
 }
